@@ -6,5 +6,5 @@ export abstract class CommentRepository {
 
   abstract all(): Observable<Comment[]>;
 
-  abstract byId(id: string): Observable<Comment>;
+  abstract byId(id: string): Observable<Comment[]>;
 }

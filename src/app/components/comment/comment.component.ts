@@ -10,7 +10,7 @@ import {CommentRepository} from '../../services/comment.repository';
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit {
-  comment: Observable<Comment>;
+  comment: Observable<Comment[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,8 +18,6 @@ export class CommentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.comment = this.commentService.byId(params.get('id'));
-    });
+
   }
 }

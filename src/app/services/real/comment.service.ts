@@ -19,7 +19,7 @@ export class CommentService implements CommentRepository {
     return this.http.get<Comment[]>(this.url);
   }
 
-  byId(id: string): Observable<Comment> {
-    return this.http.get<Comment>(`${this.url}/${id}`);
+  byId(id: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.url}/${id}`);
   }
 }

@@ -9,6 +9,7 @@ import {RegisterComponent} from './components/register/register.component';
 
 const routes: Routes = [
   {path: '', component: UsersComponent},
+  {path: 'feed', component: FeedComponent},
   {path: 'posts/:id', component: PostComponent},
   {path: 'comment/:id', component: CommentComponent},
   {path: 'register', component: RegisterComponent},

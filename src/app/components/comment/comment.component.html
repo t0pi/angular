@@ -1,4 +1,7 @@
-<div *ngIf="comment | async as c">
-    <h5>{{c.author}}</h5>
-    <p>{{c.content}}</p>
-</div>
+<mat-card class="card comment" *ngFor="let comment of (comment | async)">
+  <h5>
+   {{comment.author}}
+  </h5>
+
+  <p>{{comment.content}}</p>
+</mat-card>

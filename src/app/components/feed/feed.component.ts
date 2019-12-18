@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import { CommentService } from './../../services/real/comment.service';
+import { RouterModule } from '@angular/router';
+import {Component, OnInit, OnChanges} from '@angular/core';
 import {Observable} from 'rxjs';
+import {CommentComponent} from '../comment/comment.component';
 import {Post} from '../../models/post';
 import {Comment} from '../../models/comment';
 import {PostRepository} from '../../services/post.repository';
@@ -12,40 +15,56 @@ import {CommentRepository} from '../../services/comment.repository';
 })
 export class FeedComponent implements OnInit {
   feed: Observable<Post[]>;
-  //post: Observable<Comment[]>;
-
+  post: Observable<Comment[]>;
+  pschit: Observable<Comment[]> ;
+  values: any;
   constructor(
     private postService: PostRepository,
-    //private commentService: CommentRepository
+    private commentService: CommentRepository
   ) { }
 
   ngOnInit() {
     this.feed = this.postService.all();
-    const v = this.feed;
-    v.subscribe({
-      next(value){
-        for(let i = 0; i< value.length;i++)
-        {
-          console.log(value[i].id)
-        }
+    const arr = [];
+    const comms = [];
+    const v = this.feed.toPromise().then(data => {
+      arr.push(data);
+
+    }).then(dt => {
+      let usersstatus = [];
+      let datas = {};
+      for(let i = 0; i < arr[0].length; i++)
+      {
+        this.pschit = this.postService.getPostComments(String(arr[0][i].id));
+        this.pschit.forEach(val => {
+          if(val[0])
+          {
+            datas = val[0];
+            usersstatus.push(datas);
+          }
+          console.log(usersstatus);
+          this.values = usersstatus;
+        });
+
       }
+      console.log(comms);
     });
+    //console.log(v);
+    //console.log(this.pschit);
+    // v.subscribe(value => {
+    //  arr = value;
+    //}
+        // tslint:disable-next-line: prefer-for-of
 
-    console.log(v);
-    var arr = [];
-    var request: any = {};
-    v.forEach((v) => arr.push(v));
-
-    for(let i = 0;i < arr.length;i++)
-    {
-      request.id = arr[i].id;
-      // bli;
-      //commentsByPosts.push(arr[i].id);
-      //p.id = arr[i].id;
-      //commentsByPosts.push(p);
-    }
-    console.log(request);
-    // console.log(commentsByPosts);
-    //this.post = this.commentService.all();
+    // );
+    console.log(arr);
+    // tslint:disable-next-line: prefer-for-of
   }
+  // tslint:disable-next-line: use-lifecycle-interface
+  getComms(id) {
+    console.log(id);
+    console.log(this.post);
+  }
+
+  // tslint:disable-next-line: use-lifecycle-interface
 }
