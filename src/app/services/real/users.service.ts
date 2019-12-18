@@ -8,7 +8,7 @@ import {UsersRepository} from '../users.repository';
 @Injectable()
 
 export class UsersService implements UsersRepository{
-  private url: string = environment.api + '/posts';
+  private url: string = environment.api + '/users';
 
   constructor(private http: HttpClient) { }
 

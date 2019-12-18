@@ -18,12 +18,13 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.users = this.userService.all();
     const v = this.users;
+    console.log(v);
     v.subscribe({
       next(value) {
         // tslint:disable-next-line: prefer-for-of
         for(let i = 0; i < value.length; i++)
         {
-          console.log(value[i].id);
+          console.log(value[i].pwd);
         }
       }
     });
