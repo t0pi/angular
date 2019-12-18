@@ -22,4 +22,8 @@ export class PostService implements PostRepository {
   byId(id: string): Observable<Post> {
     return this.http.get<Post>(`${this.url}/${id}`);
   }
+
+  getPostComments(id: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.url}/${id}`);
+  }
 }

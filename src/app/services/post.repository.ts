@@ -7,7 +7,7 @@ export abstract class PostRepository {
 
   abstract all(): Observable<Post[]>;
 
-  abstract CommentsById(id: string): Observable<Comment>
-
   abstract byId(id: string): Observable<Post>;
+
+  abstract getPostComments(id: string): Observable<Post[]>;
 }

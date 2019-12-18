@@ -4,16 +4,17 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSnackBarModule, MatToolbarModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RegisterComponent} from './components/register/register.component';
 import { PostComponent } from './components/post/post.component';
 import { FeedComponent } from './components/feed/feed.component';
-import {PostRepository} from "./services/post.repository";
-
-import {PostService} from "./services/real/post.service";
+import {PostRepository} from './services/post.repository';
+import {PostService} from './services/real/post.service';
 import { CommentComponent } from './components/comment/comment.component';
+import {UsersService} from './services/real/users.service';
+import {UsersRepository} from './services/users.repository';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CommentComponent } from './components/comment/comment.component';
     RegisterComponent,
     PostComponent,
     FeedComponent,
-    CommentComponent
+    CommentComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,9 @@ import { CommentComponent } from './components/comment/comment.component';
     MatSnackBarModule
   ],
   providers: [
-    {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), 'deps': [HttpClient]}
+    {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},
+    {provide: UsersRepository, useFactory: (http: HttpClient) => new UsersService(http), deps: [HttpClient]}
+
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: window.origin + '/api'
+  api: 'localhost:8080' + '/api'
 };
