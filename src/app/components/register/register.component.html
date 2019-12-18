@@ -1,0 +1,13 @@
+<button mat-raised-button color="accent" title="back" routerLink="/">
+  Retour
+</button>
+
+<form class="book-form" [formGroup]="bookForm" (ngSubmit)="onSubmit(bookForm.value)">
+  <mat-form-field class="book-field-full-width">
+    <input matInput id="title" type="text" placeholder="Titre" formControlName="title">
+  </mat-form-field>
+  <mat-form-field class="book-field-full-width">
+    <input matInput id="author" type="text" placeholder="Auteur" formControlName="author">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Ajouter</button>
+</form>

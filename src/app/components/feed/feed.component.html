@@ -1,0 +1,19 @@
+<mat-card class="card post" *ngFor="let post of (feed | async)">
+  <mat-card-header>
+    <mat-card-title>{{post.title}}</mat-card-title>
+    <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card class="card comment" *ngFor="let comment of (feed | async)">
+    <h5>
+     {{comment.author}}
+    </h5>
+
+    <p>{{comment.content}}</p>
+  </mat-card>
+
+
+<!--  <mat-card-actions>-->
+<!--    <button mat-raised-button color="primary" [routerLink]="['/posts', post.id]">Voir</button>-->
+<!--  </mat-card-actions>-->
+</mat-card>

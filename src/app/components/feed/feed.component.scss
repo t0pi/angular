@@ -1,0 +1,23 @@
+.card {
+  min-width: 100%;
+  display: inline-block;
+  margin: 20px;
+  &.post {
+
+  }
+  &.comment {
+    background-color: #f2f2f2;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    margin: 5px;
+    padding: 7px 15px;
+    box-shadow: none;
+  }
+  h5 {
+    margin-bottom: 0;
+  }
+  p {
+    margin-top: 5px ;
+  }
+}
