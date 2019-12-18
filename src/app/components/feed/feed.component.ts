@@ -12,16 +12,40 @@ import {CommentRepository} from '../../services/comment.repository';
 })
 export class FeedComponent implements OnInit {
   feed: Observable<Post[]>;
-  post: Observable<Comment[]>;
+  //post: Observable<Comment[]>;
 
   constructor(
     private postService: PostRepository,
     //private commentService: CommentRepository
-  )
-  { }
+  ) { }
 
   ngOnInit() {
     this.feed = this.postService.all();
+    const v = this.feed;
+    v.subscribe({
+      next(value){
+        for(let i = 0; i< value.length;i++)
+        {
+          console.log(value[i].id)
+        }
+      }
+    });
+
+    console.log(v);
+    var arr = [];
+    var request: any = {};
+    v.forEach((v) => arr.push(v));
+
+    for(let i = 0;i < arr.length;i++)
+    {
+      request.id = arr[i].id;
+      // bli;
+      //commentsByPosts.push(arr[i].id);
+      //p.id = arr[i].id;
+      //commentsByPosts.push(p);
+    }
+    console.log(request);
+    // console.log(commentsByPosts);
     //this.post = this.commentService.all();
   }
 }

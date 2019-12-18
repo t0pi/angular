@@ -11,6 +11,7 @@ import {RegisterComponent} from './components/register/register.component';
 import { PostComponent } from './components/post/post.component';
 import { FeedComponent } from './components/feed/feed.component';
 import {PostRepository} from "./services/post.repository";
+
 import {PostService} from "./services/real/post.service";
 import { CommentComponent } from './components/comment/comment.component';
 
