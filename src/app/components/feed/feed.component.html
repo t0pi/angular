@@ -4,15 +4,18 @@
       <mat-card-title>{{post.title}}</mat-card-title>
       <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
     </mat-card-header>
-
-    <mat-card class="card comment" *ngFor="let comment of values" >
-      <div *ngIf="comment.postId==post.id">
-        <h5 >
-         {{comment.author}}
-        </h5>
-        <p>{{comment.content}}</p>
+    <div *ngFor="let comment of values" >
+      <div *ngFor="let c of comment">
+        <div *ngIf="c.postId==post.id">
+        <mat-card class="card comment">
+              <h5 >
+               {{c.author}}
+              </h5>
+              <p>{{c.content}}</p>
+            </mat-card>
+          </div>
       </div>
-    </mat-card>
+    </div>
     <input type="text" name="text" id="text" placeholder="Et ta maman ?">
   </div>
 <!--  <mat-card-actions>-->
