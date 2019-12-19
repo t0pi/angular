@@ -7,7 +7,7 @@ import {Post} from '../../models/post';
 import {Comment} from '../../models/comment';
 import {PostRepository} from '../../services/post.repository';
 import {CommentRepository} from '../../services/comment.repository';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
@@ -22,6 +22,7 @@ export class FeedComponent implements OnInit {
   commentForm: FormGroup;
   postForm: FormGroup;
   values: any;
+  isValid = false;
   constructor(
     private postService: PostRepository,
     private commentService: CommentRepository,
@@ -32,7 +33,7 @@ export class FeedComponent implements OnInit {
       title: 'Titre',
       postdate: '',
       author: 'Sylvanas Windrunner',
-      content: ''
+      content: ['', Validators.required]
     });
     this.commentForm = this.formBuilder.group({
       dateComment: '2019-10-10 16:00:00',
@@ -43,7 +44,6 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.feed = this.postService.all();
-    console.log(this.feed);
     const arr = [];
     const v = this.feed.toPromise().then(data => {
       arr.push(data);
@@ -56,14 +56,11 @@ export class FeedComponent implements OnInit {
         this.pschit.forEach(val => {
           // tslint:disable-next-line: forin
           usersstatus.push(val);
-          console.log(usersstatus);
           this.values = usersstatus;
-          console.log(this.values);
         });
 
       }
     });
-    console.log(arr);
     // tslint:disable-next-line: prefer-for-of
   }
   // tslint:disable-next-line: use-lifecycle-interface
@@ -73,20 +70,19 @@ export class FeedComponent implements OnInit {
    * ******** NOUVEAU POST
    */
   onSubmitPost(data: Post) {
-    console.log("data form :" + data);
-    if (this.isPostFormComplete(data)) {
-      console.log("FORM REUSSI");
-      console.log(data);
-      this.postService.add(data)
-        .subscribe(() => {
-          this.postForm.reset();
-          this.openSnackBar('Le post a été ajouté');
-        });
-    }
-  }
-  private isPostFormComplete(data: Post) {
-    return data && (data.title && data.postdate && data.author && data.content);
-    console.log(data);
+    console.log(this.postForm.value);
+    const inf: Post = {
+      author : this.postForm.value.author,
+      content: this.postForm.value.content,
+      postdate : Date.now().toString(),
+      title: this.postForm.value.title
+    };
+    console.log(inf);
+    this.postService.add(inf).subscribe(() => {
+        this.postForm.reset();
+        this.openSnackBar('Le post a été ajouté');
+      });
+
   }
 
 

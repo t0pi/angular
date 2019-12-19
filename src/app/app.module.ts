@@ -8,7 +8,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule,
+  MatGridListModule
 } from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,6 +27,9 @@ import {UsersService} from './services/real/users.service';
 import {UsersRepository} from './services/users.repository';
 import { UsersComponent } from './components/users/users.component';
 import { CommentRepository } from './services/comment.repository';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CookieService} from 'ngx-cookie-service';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,8 @@ import { CommentRepository } from './services/comment.repository';
     PostComponent,
     FeedComponent,
     CommentComponent,
-    UsersComponent
+    UsersComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,13 +53,16 @@ import { CommentRepository } from './services/comment.repository';
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatGridListModule
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},
     {provide: UsersRepository, useFactory: (http: HttpClient) => new UsersService(http), deps: [HttpClient]},
-    {provide: CommentRepository, useFactory: (http: HttpClient) => new CommentService(http), deps: [HttpClient]}
-
+    {provide: CommentRepository, useFactory: (http: HttpClient) => new CommentService(http), deps: [HttpClient]},
+    {provide: CookieService}
   ],
   bootstrap: [AppComponent]
 })
