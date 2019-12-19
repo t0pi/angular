@@ -1,5 +1,15 @@
+<mat-card class="card">
+  <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmit(postForm.value)">
+    <mat-form-field class="post-field-full-width">
+      <input  id="postAuthor" type="hidden" formControlName="author">
+      <input  id="postDate"  type="hidden"  formControlName="date">
+      <input matInput id="postContent" type="text" placeholder="Créez un nouveau post" formControlName="content">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Envoyer</button>
+  </form>
+</mat-card>
 <div class="card post" *ngFor="let post of (feed | async)">
-  <div >
+  <mat-card class="card" >
     <mat-card-header  [attr.data-message-id]="post.id">
       <mat-card-title>{{post.title}}</mat-card-title>
       <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
@@ -13,10 +23,14 @@
         <p>{{comment.content}}</p>
       </div>
     </mat-card>
-    <input type="text" name="text" id="text" placeholder="Et ta maman ?">
-  </div>
-<!--  <mat-card-actions>-->
-<!--    <button mat-raised-button color="primary" [routerLink]="['/posts', post.id]">Voir</button>-->
-<!--  </mat-card-actions>-->
+    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmit(commentForm.value)">
+      <mat-form-field class="comment-field-full-width">
+        <input  id="commentAuthor" type="hidden" formControlName="author">
+        <input  id="commentDate"  type="hidden"  formControlName="date">
+        <input matInput id="commentContent" type="text" placeholder="Ajoutez un commentaire" formControlName="content">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Envoyer</button>
+    </form>
+  </mat-card>
 </div>
 

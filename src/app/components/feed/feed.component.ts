@@ -7,6 +7,8 @@ import {Post} from '../../models/post';
 import {Comment} from '../../models/comment';
 import {PostRepository} from '../../services/post.repository';
 import {CommentRepository} from '../../services/comment.repository';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'ngu-feed',
@@ -17,11 +19,21 @@ export class FeedComponent implements OnInit {
   feed: Observable<Post[]>;
   post: Observable<Comment[]>;
   pschit: Observable<Comment[]> ;
+  commentForm: FormGroup;
   values: any;
   constructor(
     private postService: PostRepository,
-    private commentService: CommentRepository
-  ) { }
+    private commentService: CommentRepository,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private bookService: CommentRepository
+  ) {
+    this.commentForm = this.formBuilder.group({
+      date: '',
+      author: '',
+      content: ''
+    });
+  }
 
   ngOnInit() {
     this.feed = this.postService.all();
@@ -67,4 +79,27 @@ export class FeedComponent implements OnInit {
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
+
+  /**
+   * GESTION NOUVEAU COMMENTAIRE / FORM
+   */
+
+  onSubmit(data: Comment) {
+    if (this.isFormComplete(data)) {
+      this.bookService.add(data)
+        .subscribe(() => {
+          this.commentForm.reset();
+          this.openSnackBar('Le livre a été ajouté');
+        });
+    }
+  }
+  private isFormComplete(data: Comment) {
+    return data && (data.date && data.content && data.author);
+  }
+
+  private openSnackBar(message: string) {
+    this.snackBar.open(message, 'Super!', {
+      duration: 5000,
+    });
+  }
 }
