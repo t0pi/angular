@@ -48,18 +48,16 @@ export class FeedComponent implements OnInit {
       for(let i = 0; i < arr[0].length; i++)
       {
         this.pschit = this.postService.getPostComments(String(arr[0][i].id));
+        // console.log(this.pschit);
         this.pschit.forEach(val => {
-          if(val[0])
-          {
-            datas = val[0];
-            usersstatus.push(datas);
-          }
+          // tslint:disable-next-line: forin
+          usersstatus.push(val);
           console.log(usersstatus);
           this.values = usersstatus;
         });
 
       }
-      console.log(comms);
+      // console.log(comms);
     });
     //console.log(v);
     //console.log(this.pschit);

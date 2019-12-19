@@ -8,21 +8,26 @@
     <button mat-raised-button color="primary" type="submit">Envoyer</button>
   </form>
 </mat-card>
+
 <div class="card post" *ngFor="let post of (feed | async)">
   <mat-card class="card" >
     <mat-card-header  [attr.data-message-id]="post.id">
       <mat-card-title>{{post.title}}</mat-card-title>
       <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
     </mat-card-header>
-
-    <mat-card class="card comment" *ngFor="let comment of values" >
-      <div *ngIf="comment.postId==post.id">
-        <h5 >
-         {{comment.author}}
-        </h5>
-        <p>{{comment.content}}</p>
+    <div *ngFor="let comment of values" >
+      <div *ngFor="let c of comment">
+        <div *ngIf="c.postId==post.id">
+        <mat-card class="card comment">
+              <h5 >
+               {{c.author}}
+              </h5>
+              <p>{{c.content}}</p>
+            </mat-card>
+          </div>
       </div>
-    </mat-card>
+
+    </div>
     <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmit(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
         <input  id="commentAuthor" type="hidden" formControlName="author">
@@ -32,5 +37,6 @@
       <button mat-raised-button color="primary" type="submit">Envoyer</button>
     </form>
   </mat-card>
+
 </div>
 
