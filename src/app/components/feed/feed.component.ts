@@ -30,7 +30,7 @@ export class FeedComponent implements OnInit {
   ) {
     this.postForm = this.formBuilder.group({
       title: 'Titre',
-      datePost: '',
+      postdate: '',
       author: 'Sylvanas Windrunner',
       content: ''
     });
@@ -90,7 +90,7 @@ export class FeedComponent implements OnInit {
     }
   }
   private isPostFormComplete(data: Post) {
-    return data && (data.postdate && data.content && data.author);
+    return data && (data.postdate && data.title && data.content && data.author);
   }
 
   /**

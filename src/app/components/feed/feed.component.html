@@ -2,7 +2,7 @@
   <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="postAuthor" type="hidden" formControlName="author">
-      <input  id="postDate"  type="hidden"  formControlName="datePost">
+      <input  id="postdate"  type="hidden"  formControlName="postdate">
       <input  id="postTitle"  type="hidden"  formControlName="title">
       <input matInput id="postContent" type="text" placeholder="Créez un nouveau post" formControlName="content">
     </mat-form-field>
@@ -16,7 +16,9 @@
       <mat-card-subtitle>
         <b>{{post.author}}</b>
         <span class="date">
-          {{post.postdate.split(" ")[0].split("-")[2]}}/{{post.postdate.split(" ")[0].split("-")[1]}}/{{post.postdate.split(" ")[0].split("-")[0]}}
+          <!--  date formatée -->
+          {{post.postdate.split(" ")[0].split("-")[2]}}/{{post.postdate.split(" ")[0].split("-")[1]}}/{{post.postdate.split(" ")[0].split("-")[0]}} à
+          <!--  heure formatée -->
           {{post.postdate.split(" ")[1].split(":")[0]}}:{{post.postdate.split(" ")[1].split(":")[1]}}
         </span>
       </mat-card-subtitle>
