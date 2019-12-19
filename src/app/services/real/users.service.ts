@@ -15,7 +15,7 @@ export class UsersService implements UsersRepository {
   find(id: string): Observable<User> {
     return this.http.post<User>(this.url, id);
   }
-
+  // oui encore
   findByMail(mail: string): Observable<User> {
     console.log(this.url + '/mail/' + mail.replace('@', '%40'));
     mail = mail.replace('@', '%40')

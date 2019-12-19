@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 export abstract class UsersRepository {
   abstract find(id: string): Observable<User>;
-
+  // oui
   abstract findByMail(mail: string): Observable<User>;
 
   abstract add(user: User): Observable<User>;
