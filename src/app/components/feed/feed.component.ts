@@ -45,7 +45,6 @@ export class FeedComponent implements OnInit {
     this.feed = this.postService.all();
     console.log(this.feed);
     const arr = [];
-    const comms = [];
     const v = this.feed.toPromise().then(data => {
       arr.push(data);
 
@@ -63,35 +62,33 @@ export class FeedComponent implements OnInit {
         });
 
       }
-      // console.log(comms);
     });
     console.log(arr);
     // tslint:disable-next-line: prefer-for-of
   }
   // tslint:disable-next-line: use-lifecycle-interface
-  getComms(id) {
-    console.log(id);
-    console.log(this.post);
-  }
 
   // tslint:disable-next-line: use-lifecycle-interface
   /**
    * ******** NOUVEAU POST
    */
   onSubmitPost(data: Post) {
+    console.log("data form :" + data);
     if (this.isPostFormComplete(data)) {
+      console.log("FORM REUSSI");
       console.log(data);
       this.postService.add(data)
         .subscribe(() => {
-
           this.postForm.reset();
-          this.openSnackBar('Le commentaire a été ajouté');
+          this.openSnackBar('Le post a été ajouté');
         });
     }
   }
   private isPostFormComplete(data: Post) {
-    return data && (data.postdate && data.title && data.content && data.author);
+    return data && (data.title && data.postdate && data.author && data.content);
+    console.log(data);
   }
+
 
   /**
    * ******** NOUVEAU COMMENTAIRE

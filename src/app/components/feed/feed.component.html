@@ -1,10 +1,10 @@
 <mat-card class="card submitPost">
   <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
-      <input  id="postAuthor" type="hidden" formControlName="author">
+      <input  id="title"  type="hidden"  formControlName="title">
       <input  id="postdate"  type="hidden"  formControlName="postdate">
-      <input  id="postTitle"  type="hidden"  formControlName="title">
-      <input matInput id="postContent" type="text" placeholder="Créez un nouveau post" formControlName="content">
+      <input  id="author" type="hidden" formControlName="author">
+      <input matInput id="content" type="text" placeholder="Créez un nouveau post" formControlName="content">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Envoyer</button>
   </form>
@@ -50,8 +50,8 @@
     <mat-divider></mat-divider>
     <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
-        <input matInput type="text" value="Sylvanas Windrunner" formControlName="author">
-        <input  matInput type="text"  formControlName="dateComment">
+        <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
+        <input   type="hidden"  formControlName="dateComment">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
