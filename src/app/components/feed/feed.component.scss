@@ -15,6 +15,7 @@ $subtle : #eef0fc;
     padding: 7px 25px;
     box-shadow: none;
     border-radius: 25px;
+    color: #65648e;
   }
   &.submitPost {
     margin-bottom: 40px;
@@ -24,7 +25,7 @@ $subtle : #eef0fc;
   }
   p {
     margin: 5px 0 ;
-    font-size: 14px;
+    font-size: 15px;
   }
  form.comment-form,form.post-form{
    ::ng-deep .mat-form-field-underline {
@@ -55,5 +56,13 @@ $subtle : #eef0fc;
   }
   mat-divider {
     margin: 20px 0;
+  }
+  .date {
+    font-size: 12px;
+    padding-left: 2px;
+    font-weight: 400;
+    &.comment {
+      color: #979cbc;
+    }
   }
 }

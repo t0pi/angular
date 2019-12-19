@@ -2,7 +2,8 @@
   <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="postAuthor" type="hidden" formControlName="author">
-      <input  id="postDate"  type="hidden"  formControlName="date">
+      <input  id="postDate"  type="hidden"  formControlName="datePost">
+      <input  id="postTitle"  type="hidden"  formControlName="title">
       <input matInput id="postContent" type="text" placeholder="Créez un nouveau post" formControlName="content">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Envoyer</button>
@@ -12,18 +13,34 @@
 <div class="card post" *ngFor="let post of (feed | async)">
   <mat-card class="card">
     <mat-card-header  [attr.data-message-id]="post.id">
-      <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
+      <mat-card-subtitle>
+        <b>{{post.author}}</b>
+        <span class="date">
+          {{post.datePost}}
+          <!--  date formatée -->
+<!--          {{post.date.split(" ")[0].split("-")[2]}}/{{post.date.split(" ")[0].split("-")[1]}}/{{post.date.split(" ")[0].split("-")[0]}} à-->
+<!--          &lt;!&ndash;  heure formatée &ndash;&gt;-->
+<!--          {{post.date.split(" ")[1].split(":")[0]}}:{{post.date.split(" ")[1].split(":")[1]}}-->
+        </span>
+      </mat-card-subtitle>
       <mat-card-title>{{post.title}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <p>{{post.content}}</p>
     </mat-card-content>
+
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
         <div *ngIf="c.postId==post.id">
         <mat-card class="card comment">
               <h5 >
                {{c.author}}
+                <span class="date comment">
+                  <!--  date formatée -->
+                  {{c.date.split(" ")[0].split("-")[2]}}/{{c.date.split(" ")[0].split("-")[1]}}/{{c.date.split(" ")[0].split("-")[0]}} à
+                  <!--  heure formatée -->
+                  {{c.date.split(" ")[1].split(":")[0]}}:{{c.date.split(" ")[1].split(":")[1]}}
+                 </span>
               </h5>
               <p>{{c.content}}</p>
             </mat-card>
@@ -34,13 +51,12 @@
     <mat-divider></mat-divider>
     <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
-        <input  id="commentAuthor" type="hidden" formControlName="author">
-        <input  id="commentDate"  type="hidden"  formControlName="date">
-        <input matInput id="commentContent" type="text" placeholder="Ajoutez un commentaire" formControlName="content">
+        <input matInput type="text" value="Sylvanas Windrunner" formControlName="author">
+        <input  matInput type="text"  formControlName="dateComment">
+        <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
     </form>
   </mat-card>
-
 </div>
 

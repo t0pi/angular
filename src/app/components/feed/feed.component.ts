@@ -28,9 +28,15 @@ export class FeedComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
   ) {
+    this.postForm = this.formBuilder.group({
+      title: 'Titre',
+      datePost: '',
+      author: 'Sylvanas Windrunner',
+      content: ''
+    });
     this.commentForm = this.formBuilder.group({
-      date: '',
-      author: '',
+      dateComment: '2019-10-10 16:00:00',
+      author: 'Sylvanas Windrunner',
       content: ''
     });
   }
@@ -54,6 +60,7 @@ export class FeedComponent implements OnInit {
           usersstatus.push(val);
           console.log(usersstatus);
           this.values = usersstatus;
+          console.log(this.values);
         });
 
       }
@@ -82,15 +89,17 @@ export class FeedComponent implements OnInit {
    */
   onSubmitPost(data: Post) {
     if (this.isPostFormComplete(data)) {
-      this.commentService.add(data)
+      console.log(data);
+      this.postService.add(data)
         .subscribe(() => {
-          this.commentForm.reset();
+
+          this.postForm.reset();
           this.openSnackBar('Le commentaire a été ajouté');
         });
     }
   }
   private isPostFormComplete(data: Post) {
-    return data && (data.date && data.content && data.author);
+    return data && (data.datePost && data.title && data.content && data.author);
   }
 
   /**
@@ -106,7 +115,7 @@ export class FeedComponent implements OnInit {
     }
   }
   private isCommentFormComplete(data: Comment) {
-    return data && (data.date && data.content && data.author);
+    return data && (data.dateComment && data.content && data.author);
   }
 
   private openSnackBar(message: string) {

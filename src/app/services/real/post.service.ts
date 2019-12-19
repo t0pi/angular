@@ -10,10 +10,11 @@ import { CommentService } from './comment.service';
 @Injectable()
 export class PostService implements PostRepository {
   private url: string = environment.api + '/posts';
-  private commentUrl: string = environment.api + '/comments/comments';
+  private commentUrl: string = environment.api + '/comments';
   constructor(private http: HttpClient) { }
 
   add(post: Post): Observable<Post> {
+    console.log(this.url);
     return this.http.post<Post>(this.url, post);
   }
 
