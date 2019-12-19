@@ -1,5 +1,5 @@
 <mat-card class="card submitPost">
-  <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmit(postForm.value)">
+  <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="postAuthor" type="hidden" formControlName="author">
       <input  id="postDate"  type="hidden"  formControlName="date">
@@ -29,10 +29,10 @@
             </mat-card>
           </div>
       </div>
-
     </div>
+
     <mat-divider></mat-divider>
-    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmit(commentForm.value)">
+    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
         <input  id="commentAuthor" type="hidden" formControlName="author">
         <input  id="commentDate"  type="hidden"  formControlName="date">

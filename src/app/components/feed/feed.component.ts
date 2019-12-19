@@ -20,13 +20,13 @@ export class FeedComponent implements OnInit {
   post: Observable<Comment[]>;
   pschit: Observable<Comment[]> ;
   commentForm: FormGroup;
+  postForm: FormGroup;
   values: any;
   constructor(
     private postService: PostRepository,
     private commentService: CommentRepository,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private bookService: CommentRepository
   ) {
     this.commentForm = this.formBuilder.group({
       date: '',
@@ -77,21 +77,35 @@ export class FeedComponent implements OnInit {
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
-
   /**
-   * GESTION NOUVEAU COMMENTAIRE / FORM
+   * ******** NOUVEAU POST
    */
-
-  onSubmit(data: Comment) {
-    if (this.isFormComplete(data)) {
-      this.bookService.add(data)
+  onSubmitPost(data: Post) {
+    if (this.isPostFormComplete(data)) {
+      this.commentService.add(data)
         .subscribe(() => {
           this.commentForm.reset();
-          this.openSnackBar('Le livre a été ajouté');
+          this.openSnackBar('Le commentaire a été ajouté');
         });
     }
   }
-  private isFormComplete(data: Comment) {
+  private isPostFormComplete(data: Post) {
+    return data && (data.date && data.content && data.author);
+  }
+
+  /**
+   * ******** NOUVEAU COMMENTAIRE
+   */
+  onSubmitComment(data: Comment) {
+    if (this.isCommentFormComplete(data)) {
+      this.commentService.add(data)
+        .subscribe(() => {
+          this.commentForm.reset();
+          this.openSnackBar('Le commentaire a été ajouté');
+        });
+    }
+  }
+  private isCommentFormComplete(data: Comment) {
     return data && (data.date && data.content && data.author);
   }
 
