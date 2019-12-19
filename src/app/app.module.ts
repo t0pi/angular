@@ -1,7 +1,15 @@
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSnackBarModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDividerModule,
+  MatIconModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatToolbarModule
+} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
@@ -38,7 +46,8 @@ import { CommentRepository } from './services/comment.repository';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},

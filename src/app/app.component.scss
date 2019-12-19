@@ -9,7 +9,10 @@
     background-color: red;
   }
 }
-
+.mat-mini-fab.mat-accent {
+  background-color: transparent;
+  box-shadow: none;
+}
 .spacer {
   flex: 1 1 auto;
 }

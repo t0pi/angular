@@ -1,4 +1,4 @@
-<mat-card class="card">
+<mat-card class="card submitPost">
   <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmit(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="postAuthor" type="hidden" formControlName="author">
@@ -10,11 +10,14 @@
 </mat-card>
 
 <div class="card post" *ngFor="let post of (feed | async)">
-  <mat-card class="card" >
+  <mat-card class="card">
     <mat-card-header  [attr.data-message-id]="post.id">
-      <mat-card-title>{{post.title}}</mat-card-title>
       <mat-card-subtitle>{{post.author}}</mat-card-subtitle>
+      <mat-card-title>{{post.title}}</mat-card-title>
     </mat-card-header>
+    <mat-card-content>
+      <p>{{post.content}}</p>
+    </mat-card-content>
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
         <div *ngIf="c.postId==post.id">
@@ -28,13 +31,14 @@
       </div>
 
     </div>
+    <mat-divider></mat-divider>
     <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmit(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
         <input  id="commentAuthor" type="hidden" formControlName="author">
         <input  id="commentDate"  type="hidden"  formControlName="date">
         <input matInput id="commentContent" type="text" placeholder="Ajoutez un commentaire" formControlName="content">
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Envoyer</button>
+      <button mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
     </form>
   </mat-card>
 
