@@ -71,13 +71,20 @@ export class FeedComponent implements OnInit {
    */
   onSubmitPost(data: Post) {
     console.log(this.postForm.value);
+    const date = new Date();
+    let d = date.getUTCFullYear() + '-' +
+        ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+        ('00' + date.getUTCDate()).slice(-2) + ' ' +
+        ('00' + date.getUTCHours()).slice(-2) + ':' +
+        ('00' + date.getUTCMinutes()).slice(-2) + ':' +
+        ('00' + date.getUTCSeconds()).slice(-2);
     const inf: Post = {
       author : this.postForm.value.author,
       content: this.postForm.value.content,
-      postdate : Date.now().toString(),
+      postdate : d,
       title: this.postForm.value.title
     };
-    console.log(inf);
+    console.log(d);
     this.postService.add(inf).subscribe(() => {
         this.postForm.reset();
         this.openSnackBar('Le post a été ajouté');
