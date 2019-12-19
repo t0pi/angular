@@ -43,18 +43,17 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.feed = this.postService.all();
+    console.log(this.feed);
     const arr = [];
     const comms = [];
     const v = this.feed.toPromise().then(data => {
       arr.push(data);
 
     }).then(dt => {
-      let usersstatus = [];
-      let datas = {};
-      for(let i = 0; i < arr[0].length; i++)
-      {
+      const usersstatus = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < arr[0].length; i++) {
         this.pschit = this.postService.getPostComments(String(arr[0][i].id));
-        // console.log(this.pschit);
         this.pschit.forEach(val => {
           // tslint:disable-next-line: forin
           usersstatus.push(val);
@@ -66,14 +65,6 @@ export class FeedComponent implements OnInit {
       }
       // console.log(comms);
     });
-    //console.log(v);
-    //console.log(this.pschit);
-    // v.subscribe(value => {
-    //  arr = value;
-    //}
-        // tslint:disable-next-line: prefer-for-of
-
-    // );
     console.log(arr);
     // tslint:disable-next-line: prefer-for-of
   }
@@ -115,7 +106,7 @@ export class FeedComponent implements OnInit {
     }
   }
   private isCommentFormComplete(data: Comment) {
-    return data && (data.dateComment && data.content && data.author);
+    return data && (data.date && data.content && data.author);
   }
 
   private openSnackBar(message: string) {
