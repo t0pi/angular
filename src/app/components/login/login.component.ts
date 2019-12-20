@@ -61,9 +61,12 @@ export class LoginComponent implements OnInit {
 
 }
 showPw() {
+  // @ts-ignore
     if(document.getElementById('pw').type === "text") {
+      // @ts-ignore
       document.getElementById('pw').type = 'password';
     } else {
+      // @ts-ignore
       document.getElementById('pw').type = 'text';
 
     }

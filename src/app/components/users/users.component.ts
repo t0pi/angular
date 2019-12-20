@@ -80,7 +80,7 @@ export class UsersComponent implements OnInit {
         }
       });
     } else {
-      // this.registerForm.invalid;
+      this.openSnackBar('Les mots de passe ne correspondent pas...');
     }
 }
 
