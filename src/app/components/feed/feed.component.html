@@ -37,7 +37,7 @@
     </div>
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
-        <div *ngIf="c.postId==post.id">
+        <div *ngIf="c.postid==post.id">
         <mat-card class="card comment">
               <h5 >
                {{c.author}}
@@ -58,7 +58,6 @@
     <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
       <mat-form-field class="comment-field-full-width">
         <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
-        <input   type="hidden"  formControlName="dateComment">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>

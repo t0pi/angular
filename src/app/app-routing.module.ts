@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'feed', component: FeedComponent},
   {path: 'posts/:id', component: PostComponent},
   {path: 'comment/:id', component: CommentComponent},
-  {path: 'register', component: RegisterComponent},
+  // {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
 
 ];

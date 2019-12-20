@@ -40,12 +40,12 @@ export class FeedComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       title: 'Titre',
       postdate: '',
-      author: 'Sylvanas Windrunner',
+      author: localStorage.getItem('id'),
       content: ['', Validators.required]
     });
     this.commentForm = this.formBuilder.group({
-      dateComment: '2019-10-10 16:00:00',
       author: 'Sylvanas Windrunner',
+      postid: '3',
       content: ''
     });
   }
@@ -57,7 +57,6 @@ export class FeedComponent implements OnInit {
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
-        console.log(this.users);
       });
       l.subscribe(data => {
         if (data.length > 0)
@@ -84,6 +83,7 @@ export class FeedComponent implements OnInit {
             }
           }
           this.likes = arr;
+          console.log(this.likes);
         }
       });
 
@@ -107,11 +107,11 @@ export class FeedComponent implements OnInit {
           });
 
         }
+        console.log(this.values);
       });
       // tslint:disable-next-line: prefer-for-of
     } else {
       this.router.navigate(['']);
-
     }
   }
   // tslint:disable-next-line: use-lifecycle-interface
@@ -148,27 +148,37 @@ export class FeedComponent implements OnInit {
       author: localStorage.getItem('id'),
       post : String(item)
     };
-    console.log(inf);
     this.likesService.add(inf).subscribe(data => {
     });
     // window.location.reload();
   }
-  /**
-   * ******** NOUVEAU COMMENTAIRE
-   */
-  onSubmitComment(data: Comment) {
-    if (this.isCommentFormComplete(data)) {
-      this.commentService.add(data)
-        .subscribe(() => {
-          this.commentForm.reset();
-          this.openSnackBar('Le commentaire a été ajouté');
-        });
-    }
-  }
-  private isCommentFormComplete(data: Comment) {
-    return data && (data.date && data.content && data.author);
-  }
+  onSubmitComment() {
+    const today1 = new Date();
+    let c = today1.toString();
+    const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+    Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11'};
+    c = c.split(' ')[3] + '-' + arr[c.split(' ')[1]]  + '-' + c.split(' ')[2] + ' ' + c.split(' ')[4];
 
+    const inf: Comment = {
+      author : this.commentForm.value.author,
+      content: this.commentForm.value.content,
+      postid: '1',
+      date : c
+    };
+    this.commentService.add(inf).subscribe(() => {
+        this.commentForm.reset();
+        this.openSnackBar('Le commentaire a été posté !');
+        this.timeout();
+        window.location.reload();
+      });
+    }
+
+    timeout(){
+      setTimeout(function () {
+        console.log('Test');
+        this.timeout();
+    }, 1000);
+    }
   private openSnackBar(message: string) {
     this.snackBar.open(message, 'Super!', {
       duration: 5000,
