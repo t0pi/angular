@@ -55,9 +55,13 @@ export class FeedComponent implements OnInit {
       if(localStorage.getItem('id'))
       {
       this.feed = this.postService.all();
+      this.feed.subscribe(data => {
+        console.log(data);
+      })
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
+        console.log(this.users);
       });
       l.subscribe(data => {
         if (data.length > 0)
@@ -139,8 +143,8 @@ export class FeedComponent implements OnInit {
         this.openSnackBar('Le post a été ajouté');
       });
     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/feed']);
-      });
+      this.router.navigate(['/feed']);
+    });
   }
 
   likeUnlike(item)
@@ -149,7 +153,7 @@ export class FeedComponent implements OnInit {
       author: localStorage.getItem('id'),
       post : String(item)
     };
-    let boule = true;
+    /**let boule = true;
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
       console.log(data);
       if(data[0].post)
@@ -159,14 +163,11 @@ export class FeedComponent implements OnInit {
       } else {
         this.isLiked = false;
       }
+    });*/
+    this.likesService.add(inf).subscribe(datas => {
+      console.log(datas);
+      // this.openSnackBar('Like pris en compte');
     });
-    if(!this.isLiked)
-    {
-      this.likesService.add(inf).subscribe(datas => {
-        console.log(datas);
-        // this.openSnackBar('Like pris en compte');
-      });
-    }
     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/feed']);
     });
@@ -193,6 +194,9 @@ export class FeedComponent implements OnInit {
     this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/feed']);
       });
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/feed']);
+    });
     }
 
   openSnackBar(message: string) {

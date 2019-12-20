@@ -1,5 +1,8 @@
 $subtle : #eef0fc;
 .card {
+  textarea {
+    width: 100%;
+  }
   min-width: 100%;
   display: inline-block;
   margin: 20px;
@@ -57,6 +60,11 @@ form.comment-form,form.post-form{
       }
     }
   }
+  .commentsBox {
+    max-height: 500px;
+    overflow: auto;
+  }
+
 
   mat-card-content {
     padding: 0px 17px 20px;
