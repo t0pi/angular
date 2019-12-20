@@ -26,7 +26,7 @@
 
 
       <div class="likes">
-        <div *ngFor="let like of likes ">
+        <div *ngFor="let like of likes">
           <span *ngIf="like.post==post.id">{{like.author}}</span>
         </div>
         <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
@@ -43,10 +43,10 @@
 <div class="commentsBox">
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
-        <div *ngIf="c.post==post.id">
+        <div *ngIf="c.postid==post.postId">
         <mat-card class="card comment">
               <h5>
-                <span *ngIf="c.author===post.author && user.id==post.author">{{user.name}}</span>
+                <span *ngIf="c.author===post.userId">{{post.userName}}</span>
                 <span class="date comment">
                   <!--  date formatée -->
                   {{c.date.split(" ")[0].split("-")[2]}}/{{c.date.split(" ")[0].split("-")[1]}}/{{c.date.split(" ")[0].split("-")[0]}} à

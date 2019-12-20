@@ -51,7 +51,7 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+   ngOnInit() {
       if(localStorage.getItem('id'))
       {
       let finalFeed = [];
@@ -86,9 +86,10 @@ export class FeedComponent implements OnInit {
           }
         }
       });
+      console.log('feed');
+      console.log(finalFeed);
       this.feed = finalFeed;
       l.subscribe(data => {
-        console.log(data);
         if (data.length > 0)
         {
           let arr = [];
@@ -126,11 +127,16 @@ export class FeedComponent implements OnInit {
           this.pschit = this.postService.getPostComments(String(arr[0][i].id));
           this.pschit.forEach(val => {
             // tslint:disable-next-line: forin
-            usersstatus.push(val);
-            this.values = usersstatus;
-          });
+            if(val.length > 0) {
+              usersstatus.push(val);
+              console.log(val);
 
+            }
+          });
         }
+        this.values = usersstatus;
+        console.log('values');
+        console.log(this.values);
       });
       // tslint:disable-next-line: prefer-for-of
     } else {
