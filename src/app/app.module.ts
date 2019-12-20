@@ -28,7 +28,6 @@ import {UsersRepository} from './services/users.repository';
 import { UsersComponent } from './components/users/users.component';
 import { CommentRepository } from './services/comment.repository';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-//import { CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './components/login/login.component';
 import { LikesRepository } from './services/likes.repository';
 import { DragDropModule} from '@angular/cdk/drag-drop';

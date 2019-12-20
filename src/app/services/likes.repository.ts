@@ -6,6 +6,6 @@ export abstract class LikesRepository {
 
   abstract all(): Observable<Likes[]>;
 
-  abstract byId(id: string): Observable<Likes>;
+  abstract byId(id: string, author: string): Observable<Likes>;
 
 }

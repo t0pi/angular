@@ -23,12 +23,11 @@
         </span>
       </mat-card-subtitle>
 <!--      <mat-card-title>{{post.title}}</mat-card-title>-->
+
       <div class="likes">
         <div *ngFor="let like of likes ">
       <span *ngIf="like.post==post.id">
-        {{like.author}}
-      </span>
-        </div>
+
         <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
           <i class="material-icons">thumb_up</i>
         </button>

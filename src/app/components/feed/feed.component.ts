@@ -142,13 +142,25 @@ export class FeedComponent implements OnInit {
 
   likeUnlike(item)
   {
-    this.openSnackBar('Like pris en compte');
     const inf: Likes = {
       author: localStorage.getItem('id'),
       post : String(item)
     };
-    this.likesService.add(inf).subscribe(data => {
+    let boule = true;
+    this.likesService.byId(inf.post, inf.author).subscribe(data => {
+      if(!data[0])
+      {
+        boule = false;
+        this.openSnackBar('Vous avez déjà like !');
+      }
     });
+    if(!boule)
+    {
+      this.likesService.add(inf).subscribe(datas => {
+        console.log(datas);
+        this.openSnackBar('Like pris en compte');
+      });
+    }
     // window.location.reload();
   }
   onSubmitComment() {
@@ -178,9 +190,10 @@ export class FeedComponent implements OnInit {
         this.timeout();
     }, 1000);
     }
-  private openSnackBar(message: string) {
+  openSnackBar(message: string) {
     this.snackBar.open(message, 'Ok', {
       duration: 5000,
     });
   }
+
 }
