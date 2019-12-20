@@ -53,9 +53,13 @@ export class FeedComponent implements OnInit {
       if(localStorage.getItem('id'))
       {
       this.feed = this.postService.all();
+      this.feed.subscribe(data => {
+        console.log(data);
+      })
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
+        console.log(this.users);
       });
       l.subscribe(data => {
         if (data.length > 0)
@@ -137,7 +141,9 @@ export class FeedComponent implements OnInit {
         this.openSnackBar('Le post a été ajouté');
         window.location.reload();
       });
-
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/feed']);
+    });
   }
 
   likeUnlike(item)
@@ -146,22 +152,24 @@ export class FeedComponent implements OnInit {
       author: localStorage.getItem('id'),
       post : String(item)
     };
-    let boule = true;
+    /**let boule = true;
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
       if(!data[0])
       {
         boule = false;
         this.openSnackBar('Vous avez déjà like !');
       }
-    });
-    if(!boule)
-    {
+    });*/
       this.likesService.add(inf).subscribe(datas => {
         console.log(datas);
         this.openSnackBar('Like pris en compte');
       });
-    }
-    // window.location.reload();
+      this.router.navigate(['/feed']).then(data => {
+        console.log(data);
+      });
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/feed']);
+    });
   }
   onSubmitComment() {
     const today1 = new Date();
@@ -182,6 +190,9 @@ export class FeedComponent implements OnInit {
         this.timeout();
         window.location.reload();
       });
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/feed']);
+    });
     }
 
     timeout(){

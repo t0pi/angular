@@ -1,5 +1,5 @@
 <mat-card class="card submitPost">
-  <form class="post-form" [formGroup]="postForm" (ngSubmit)="onSubmitPost(postForm.value)">
+  <form class="post-form" [formGroup]="postForm" autocomplete="off" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="title"  type="hidden"  formControlName="title">
       <input  id="postdate"  type="hidden"  formControlName="postdate">
@@ -27,7 +27,7 @@
 
       <div class="likes">
         <div *ngFor="let like of likes ">
-          <span *ngIf="like.post==post.id"></span>
+          <span *ngIf="like.post==post.id">{{like.author}}</span>
         </div>
         <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
           <i class="material-icons">thumb_up</i>
@@ -40,13 +40,13 @@
       <p>{{post.content}}</p>
     </mat-card-content>
 
-
-    <div *ngFor="let comment of values" >
+<div class="commentsBox">
+    <div *ngFor="let comment of values;let user of users" >
       <div *ngFor="let c of comment">
         <div *ngIf="c.postid==post.id">
         <mat-card class="card comment">
-              <h5 >
-               {{c.author}}
+              <h5>
+                <span *ngIf="c.author===post.author && user.id==post.author">{{user.name}}</span>
                 <span class="date comment">
                   <!--  date formatée -->
                   {{c.date.split(" ")[0].split("-")[2]}}/{{c.date.split(" ")[0].split("-")[1]}}/{{c.date.split(" ")[0].split("-")[0]}} à
@@ -59,9 +59,9 @@
           </div>
       </div>
     </div>
-
+</div>
     <mat-divider></mat-divider>
-    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+    <form class="comment-form" autocomplete="off" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
       <mat-form-field class="comment-field-full-width">
         <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
@@ -70,4 +70,24 @@
     </form>
   </mat-card>
 </div>
+
+<mat-card class="example-card" style="position:fixed;bottom:0px;left:45px;max-width:250px; height: 300px; display:flex;flex-direction: column;" cdkDrag matTooltip="Drag me!">
+  <mat-card-header>
+    <mat-card-title>Messagerie instantanée</mat-card-title>
+  </mat-card-header>
+  <mat-form-field style="width: 100%">
+    <mat-label>Vos contacts</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let user of users">
+        {{user.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <textarea disabled
+            style="margin-top: auto; height: 200px; min-height: 45px!important;"
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" placeholder="Votre message..."></textarea>
+  <button disabled mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
+</mat-card>
 

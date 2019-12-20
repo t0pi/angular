@@ -60,6 +60,14 @@ export class LoginComponent implements OnInit {
     }
 
 }
+showPw() {
+    if(document.getElementById('pw').type === "text") {
+      document.getElementById('pw').type = 'password';
+    } else {
+      document.getElementById('pw').type = 'text';
+
+    }
+}
 goToReg() {
   this.router.navigate(['']);
 }

@@ -23,7 +23,17 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
+  showPw() {
+    if(document.getElementById('pw').type === "text") {
+      document.getElementById('pw').type = 'password';
+      document.getElementById('cPw').type = 'password';
 
+    } else {
+      document.getElementById('pw').type = 'text';
+      document.getElementById('cPw').type = 'text';
+
+    }
+  }
   ngOnInit() {
       this.registerForm = this.formBuilder.group({
         name: ['', Validators.required],
