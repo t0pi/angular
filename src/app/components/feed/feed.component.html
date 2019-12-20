@@ -26,7 +26,7 @@
 
       <div *ngFor="let like of likes ">
       <span *ngIf="like.post==post.id" style="position:absolute;right:10px;top:5px">
-        6 {{like.author}}
+        {{like.author}}
       </span>
       </div>
       <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
@@ -58,7 +58,7 @@
     </div>
 
     <mat-divider></mat-divider>
-    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(commentForm.value)">
+    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
       <mat-form-field class="comment-field-full-width">
         <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
