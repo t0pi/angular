@@ -57,7 +57,6 @@ export class FeedComponent implements OnInit {
       let finalFeed = [];
       this.postService.all();
       this.postService.all().subscribe(data => {
-        console.log(data);
         if(data.length > 0) {
           // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < data.length; i++) {
@@ -71,25 +70,17 @@ export class FeedComponent implements OnInit {
             };
             finalFeed.push(items);
           }
-          console.log(finalFeed);
         }
       });
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
-        console.log('users');
-        console.log(this.users);
-        console.log('feed');
-
-        console.log(finalFeed);
-
         // tslint:disable-next-line: prefer-for-of
         for ( let i = 0; i < finalFeed.length; i++) {
           // tslint:disable-next-line: prefer-for-of
           for (let j = 0; j < this.users.length; j++) {
 
             if (finalFeed[i].userId == this.users[j].id) {
-              console.log(finalFeed[i].userId === this.users[j].id);
               finalFeed[i].userName = this.users[j].name;
             }
           }
@@ -97,6 +88,7 @@ export class FeedComponent implements OnInit {
       });
       this.feed = finalFeed;
       l.subscribe(data => {
+        console.log(data);
         if (data.length > 0)
         {
           let arr = [];
@@ -123,11 +115,6 @@ export class FeedComponent implements OnInit {
           this.likes = arr;
         }
       });
-
-      //this.likesService.all().toPromise().then(date => {
-      //  console.log(date);
-      //})
-
       const arr = [];
       this.postService.all().toPromise().then(data => {
         arr.push(data);

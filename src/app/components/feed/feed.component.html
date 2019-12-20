@@ -41,9 +41,9 @@
     </mat-card-content>
 
 <div class="commentsBox">
-    <div *ngFor="let comment of values;let user of users" >
+    <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
-        <div *ngIf="c.postid==post.id">
+        <div *ngIf="c.post==post.id">
         <mat-card class="card comment">
               <h5>
                 <span *ngIf="c.author===post.author && user.id==post.author">{{user.name}}</span>
