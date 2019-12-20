@@ -141,10 +141,8 @@ export class FeedComponent implements OnInit {
     this.postService.add(inf).subscribe(() => {
         this.postForm.reset();
         this.openSnackBar('Le post a été ajouté');
+        this.router.navigate(['/feed']);
       });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/feed']);
-    });
   }
 
   likeUnlike(item)
@@ -167,8 +165,6 @@ export class FeedComponent implements OnInit {
     this.likesService.add(inf).subscribe(datas => {
       console.log(datas);
       // this.openSnackBar('Like pris en compte');
-    });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/feed']);
     });
   }
@@ -191,12 +187,8 @@ export class FeedComponent implements OnInit {
 
       });
     this.openSnackBar('Le commentaire a été posté !');
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/feed']);
-      });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/feed']);
-    });
+    this.router.navigate(['/feed']);
+
     }
 
   openSnackBar(message: string) {

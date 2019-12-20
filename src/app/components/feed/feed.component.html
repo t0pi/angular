@@ -61,11 +61,7 @@
     </div>
 </div>
     <mat-divider></mat-divider>
-<<<<<<< HEAD
     <form class="comment-form" autocomplete="off" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(post.id)">
-=======
-    <form class="comment-form" autocomplete="off" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
->>>>>>> 7b20de46d006edc3dd120fe6b89351cb676eef86
       <mat-form-field class="comment-field-full-width">
         <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">
@@ -94,7 +90,3 @@
             #autosize="cdkTextareaAutosize" placeholder="Votre message..."></textarea>
   <button disabled mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
 </mat-card>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b20de46d006edc3dd120fe6b89351cb676eef86
