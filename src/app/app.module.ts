@@ -11,13 +11,12 @@ import {
   MatSnackBarModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatGridListModule
+  MatGridListModule, MatMenuModule
 } from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {RegisterComponent} from './components/register/register.component';
 import { PostComponent } from './components/post/post.component';
 import { FeedComponent } from './components/feed/feed.component';
 import {PostRepository} from './services/post.repository';
@@ -29,20 +28,21 @@ import {UsersRepository} from './services/users.repository';
 import { UsersComponent } from './components/users/users.component';
 import { CommentRepository } from './services/comment.repository';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CookieService} from 'ngx-cookie-service';
+//import { CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './components/login/login.component';
 import { LikesRepository } from './services/likes.repository';
 import { DragDropModule} from '@angular/cdk/drag-drop';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import { ContactsComponent } from './components/contacts/contacts.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
     PostComponent,
     FeedComponent,
     CommentComponent,
     UsersComponent,
-    LoginComponent
+    LoginComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
@@ -60,14 +60,15 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
     MatCheckboxModule,
     MatTooltipModule,
     MatGridListModule,
-    DragDropModule
+    DragDropModule,
+    MatMenuModule
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},
     {provide: LikesRepository, useFactory: (http: HttpClient) => new LikesService(http), deps: [HttpClient]},
     {provide: UsersRepository, useFactory: (http: HttpClient) => new UsersService(http), deps: [HttpClient]},
     {provide: CommentRepository, useFactory: (http: HttpClient) => new CommentService(http), deps: [HttpClient]},
-    {provide: CookieService}
+   // {provide: CookieService}
   ],
   bootstrap: [AppComponent]
 })

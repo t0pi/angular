@@ -1,4 +1,3 @@
-
 import {Component, OnInit, OnChanges} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Post} from '../../models/post';
@@ -27,7 +26,7 @@ export class FeedComponent implements OnInit {
   commentForm: FormGroup;
   postForm: FormGroup;
   values: any;
-  isValid = false;
+  //isValid = false;
   constructor(
     private postService: PostRepository,
     private commentService: CommentRepository,
@@ -180,7 +179,7 @@ export class FeedComponent implements OnInit {
     }, 1000);
     }
   private openSnackBar(message: string) {
-    this.snackBar.open(message, 'Super!', {
+    this.snackBar.open(message, 'Ok', {
       duration: 5000,
     });
   }
