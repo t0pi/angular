@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit {
         if(date[0]) {
           console.log(date[0].id);
           this.openSnackBar('Connexion confirmée, redirection en cours...');
+          localStorage.setItem('id', date[0].id);
+          console.log(localStorage);
           this.loginForm.reset();
           this.router.navigate(['/feed']);
-          localStorage.setItem('id', date[0].id);
+
         } else {
           this.openSnackBar('Compte non répertorié / erreur dans le formulaire');
         }

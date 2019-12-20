@@ -10,7 +10,7 @@
   </form>
 </mat-card>
 
-<div class="card post" *ngFor="let post of (feed | async)">
+<div class="card post" *ngFor="let post of (feed | async)" >
   <mat-card class="card">
     <mat-card-header  [attr.data-message-id]="post.id">
       <mat-card-subtitle>
@@ -26,8 +26,15 @@
     </mat-card-header>
     <mat-card-content>
       <p>{{post.content}}</p>
-    </mat-card-content>
 
+    </mat-card-content>
+    <img src="https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/revolving-hearts.png"
+         height="25px" width ="25px" (click)="likeUnlike(post.id)" style="position:absolute;right:15px;top:25px;cursor:pointer">
+    <div *ngFor="let like of likes ">
+      <span *ngIf="like.post==post.id" style="position:absolute;right:10px;top:5px">
+         aimé par {{like.author}} personne(s)
+      </span>
+    </div>
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
         <div *ngIf="c.postId==post.id">

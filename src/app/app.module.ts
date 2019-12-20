@@ -1,3 +1,4 @@
+import { LikesService } from './services/real/likes.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -30,6 +31,7 @@ import { CommentRepository } from './services/comment.repository';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './components/login/login.component';
+import { LikesRepository } from './services/likes.repository';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { LoginComponent } from './components/login/login.component';
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},
+    {provide: LikesRepository, useFactory: (http: HttpClient) => new LikesService(http), deps: [HttpClient]},
     {provide: UsersRepository, useFactory: (http: HttpClient) => new UsersService(http), deps: [HttpClient]},
     {provide: CommentRepository, useFactory: (http: HttpClient) => new CommentService(http), deps: [HttpClient]},
     {provide: CookieService}
