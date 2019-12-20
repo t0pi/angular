@@ -2,7 +2,7 @@
   <form class="post-form" [formGroup]="postForm" autocomplete="off" (ngSubmit)="onSubmitPost(postForm.value)">
     <mat-form-field class="post-field-full-width">
       <input  id="title"  type="hidden"  formControlName="title">
-      <input  id="postdate"  type="hidden"  formControlName="postdate">
+      <input  id="date"  type="hidden"  formControlName="postDate">
       <input  id="author" type="hidden" formControlName="author">
       <input matInput id="content" type="text" placeholder="Créez un nouveau post" formControlName="content">
     </mat-form-field>
@@ -10,16 +10,16 @@
   </form>
 </mat-card>
 
-<div class="card post" *ngFor="let post of (feed | async)" >
+<div class="card post" *ngFor="let post of feed" >
   <mat-card class="card">
     <mat-card-header  [attr.data-message-id]="post.id">
       <mat-card-subtitle>
-        <b>{{post.author}}</b>
+        <b>{{post.userName}}</b>
         <span class="date">
           <!--  date formatée -->
-          {{post.postdate.split(" ")[0].split("-")[2]}}/{{post.postdate.split(" ")[0].split("-")[1]}}/{{post.postdate.split(" ")[0].split("-")[0]}} à
+          {{post.date.split(" ")[0].split("-")[2]}}/{{post.date.split(" ")[0].split("-")[1]}}/{{post.date.split(" ")[0].split("-")[0]}} à
           <!--  heure formatée -->
-          {{post.postdate.split(" ")[1].split(":")[0]}}:{{post.postdate.split(" ")[1].split(":")[1]}}
+          {{post.date.split(" ")[1].split(":")[0]}}:{{post.date.split(" ")[1].split(":")[1]}}
         </span>
       </mat-card-subtitle>
 <!--      <mat-card-title>{{post.title}}</mat-card-title>-->
@@ -61,7 +61,7 @@
     </div>
 </div>
     <mat-divider></mat-divider>
-    <form class="comment-form" autocomplete="off" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(post.id)">
+    <form class="comment-form" autocomplete="off" [formGroup]="commentForm" (ngSubmit)="onSubmitComment(post.postId)">
       <mat-form-field class="comment-field-full-width">
         <input  type="hidden" value="Sylvanas Windrunner" formControlName="author">
         <input matInput type="text" placeholder="Ajoutez un commentaire" formControlName="content">

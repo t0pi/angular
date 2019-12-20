@@ -18,7 +18,7 @@ import { UsersRepository } from '../../services/users.repository';
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit {
-  feed: Observable<Post[]>;
+  feed: any;
   post: Observable<Comment[]>;
   users: User[];
   pschit: Observable<Comment[]>;
@@ -40,7 +40,7 @@ export class FeedComponent implements OnInit {
   ) {
     this.postForm = this.formBuilder.group({
       title: 'Titre',
-      postdate: '',
+      postDate: '',
       author: localStorage.getItem('id'),
       content: ['', Validators.required]
     });
@@ -54,15 +54,48 @@ export class FeedComponent implements OnInit {
   ngOnInit() {
       if(localStorage.getItem('id'))
       {
-      this.feed = this.postService.all();
-      this.feed.subscribe(data => {
+      let finalFeed = [];
+      this.postService.all();
+      this.postService.all().subscribe(data => {
         console.log(data);
-      })
+        if(data.length > 0) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            let items =
+            {
+              date: data[i].postdate,
+              userId: data[i].author,
+              userName: '',
+              content: data[i].content,
+              postId: data[i].id
+            };
+            finalFeed.push(items);
+          }
+          console.log(finalFeed);
+        }
+      });
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
+        console.log('users');
         console.log(this.users);
+        console.log('feed');
+
+        console.log(finalFeed);
+
+        // tslint:disable-next-line: prefer-for-of
+        for ( let i = 0; i < finalFeed.length; i++) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let j = 0; j < this.users.length; j++) {
+
+            if (finalFeed[i].userId == this.users[j].id) {
+              console.log(finalFeed[i].userId === this.users[j].id);
+              finalFeed[i].userName = this.users[j].name;
+            }
+          }
+        }
       });
+      this.feed = finalFeed;
       l.subscribe(data => {
         if (data.length > 0)
         {
@@ -88,7 +121,6 @@ export class FeedComponent implements OnInit {
             }
           }
           this.likes = arr;
-          console.log(this.likes);
         }
       });
 
@@ -97,7 +129,7 @@ export class FeedComponent implements OnInit {
       //})
 
       const arr = [];
-      const v = this.feed.toPromise().then(data => {
+      this.postService.all().toPromise().then(data => {
         arr.push(data);
 
       }).then(dt => {
@@ -112,7 +144,6 @@ export class FeedComponent implements OnInit {
           });
 
         }
-        console.log(this.values);
       });
       // tslint:disable-next-line: prefer-for-of
     } else {
@@ -133,11 +164,12 @@ export class FeedComponent implements OnInit {
     c = c.split(' ')[3] + '-' + arr[c.split(' ')[1]]  + '-' + c.split(' ')[2] + ' ' + c.split(' ')[4];
 
     const inf: Post = {
-      author : this.postForm.value.author,
+      author : localStorage.getItem('id'),
       content: this.postForm.value.content,
       postdate : c,
-      title: this.postForm.value.title
+      title: 'hello'
     };
+
     this.postService.add(inf).subscribe(() => {
         this.postForm.reset();
         this.openSnackBar('Le post a été ajouté');
@@ -163,7 +195,6 @@ export class FeedComponent implements OnInit {
       }
     });*/
     this.likesService.add(inf).subscribe(datas => {
-      console.log(datas);
       // this.openSnackBar('Like pris en compte');
       this.router.navigate(['/feed']);
     });
