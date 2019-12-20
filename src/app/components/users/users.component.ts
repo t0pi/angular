@@ -72,9 +72,7 @@ export class UsersComponent implements OnInit {
     } else {
       // this.registerForm.invalid;
     }
-
 }
-
 
 goToLogin() {
   this.router.navigate(['/login']);

@@ -14,6 +14,8 @@ export class AppComponent {
     private router: Router
   ) { }
 
+
+
   goToContacts() {
     this.router.navigate(['/contacts']);
   }

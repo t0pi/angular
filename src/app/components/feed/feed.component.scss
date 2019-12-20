@@ -73,7 +73,24 @@ form.comment-form,form.post-form{
     }
   }
 }
+
 div.mat-card-header-text {
   background-color: red;
   width: 90%!important;
+}
+
+.likes {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-left: auto;
+  div {
+    display: flex;
+    padding-right: 7px;
+    span {
+      color: #ff4081;
+      align-self: center;
+      margin-left: 17px;
+      text-align: center;
+    }
+  }
 }

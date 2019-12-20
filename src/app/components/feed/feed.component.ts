@@ -119,7 +119,7 @@ export class FeedComponent implements OnInit {
   /**
    * ******** NOUVEAU POST
    */
-  onSubmitPost(data: Post) {
+  onSubmitPost() {
     const today1 = new Date();
     let c = today1.toString();
     const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
