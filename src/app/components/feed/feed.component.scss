@@ -25,9 +25,15 @@ $subtle : #eef0fc;
   }
   p {
     margin: 5px 0 ;
-    font-size: 15px;
+    font-size: 17px;
   }
- form.comment-form,form.post-form{
+mat-card-subtitle {
+  padding-top: 15px;
+}
+  button.like {
+    margin-left: auto;
+  }
+form.comment-form,form.post-form{
    ::ng-deep .mat-form-field-underline {
      display: none;
    }
@@ -51,6 +57,7 @@ $subtle : #eef0fc;
       }
     }
   }
+
   mat-card-content {
     padding: 0px 17px 20px;
   }
@@ -65,4 +72,8 @@ $subtle : #eef0fc;
       color: #979cbc;
     }
   }
+}
+div.mat-card-header-text {
+  background-color: red;
+  width: 90%!important;
 }

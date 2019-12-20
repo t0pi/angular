@@ -1,8 +1,23 @@
-.mat-form-field{
-    display:block;
+.card.login {
+  display: flex;
+  width: 870px;
+  mat-card {
+    padding: 55px;
+    margin: 20px auto auto;
+    width: 340px;
+    button {
+      display: block;
+      margin: 35px auto 10px;
+      &.link {
+        background-color: transparent;
+        color: #3f51b5;
+        text-decoration: underline;
+        box-shadow: none;
+        margin: 0px auto 20px;
+      }
+    }
   }
-
- 
-  input{
-      text-align:center;
+  mat-form-field {
+    width: 100%;
   }
+}

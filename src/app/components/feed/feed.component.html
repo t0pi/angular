@@ -22,19 +22,22 @@
           {{post.postdate.split(" ")[1].split(":")[0]}}:{{post.postdate.split(" ")[1].split(":")[1]}}
         </span>
       </mat-card-subtitle>
-      <mat-card-title>{{post.title}}</mat-card-title>
+<!--      <mat-card-title>{{post.title}}</mat-card-title>-->
+
+      <div *ngFor="let like of likes ">
+      <span *ngIf="like.post==post.id" style="position:absolute;right:10px;top:5px">
+        6 {{like.author}}
+      </span>
+      </div>
+      <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
+        <i class="material-icons">thumb_up</i>
+      </button>
     </mat-card-header>
     <mat-card-content>
       <p>{{post.content}}</p>
-
     </mat-card-content>
-    <img src="https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/revolving-hearts.png"
-         height="25px" width ="25px" (click)="likeUnlike(post.id)" style="position:absolute;right:15px;top:25px;cursor:pointer">
-    <div *ngFor="let like of likes ">
-      <span *ngIf="like.post==post.id" style="position:absolute;right:10px;top:5px">
-         aimé par {{like.author}} personne(s)
-      </span>
-    </div>
+
+
     <div *ngFor="let comment of values" >
       <div *ngFor="let c of comment">
         <div *ngIf="c.postId==post.id">
@@ -65,19 +68,4 @@
     </form>
   </mat-card>
 </div>
-<mat-card class="example-card" style="position:fixed;top:150px;right:45px;max-width:250px;background-color:#333333;color:#decba4" cdkDrag matTooltip="Drag me!">
-  <mat-card-header>
-    <mat-card-title style="color:#ffffff">Liste des utilisateurs</mat-card-title>
-
-  </mat-card-header>
-
-      <div *ngFor="let user of users" style="text-align:center" >
-        <div style="padding:10px">
-          {{user.name}}
-        </div>
-        <mat-divider style="background-color:#decba4;width:80%;margin-left:10%"></mat-divider>
-      </div>
-
-
-</mat-card>
 

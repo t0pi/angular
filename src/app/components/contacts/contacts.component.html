@@ -1,0 +1,13 @@
+<div class="card contacts">
+  <mat-card class="card">
+    <mat-card-header>
+      <h3>Vos contacts</h3>
+    </mat-card-header>
+    <div *ngFor="let user of users">
+      <div style="padding:20px">
+        {{user.name}}
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-card>
+</div>
