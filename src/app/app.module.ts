@@ -11,7 +11,7 @@ import {
   MatSnackBarModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatGridListModule, MatMenuModule
+  MatGridListModule, MatMenuModule, MatSelectModule
 } from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -60,7 +60,8 @@ import { ContactsComponent } from './components/contacts/contacts.component';
     MatTooltipModule,
     MatGridListModule,
     DragDropModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},

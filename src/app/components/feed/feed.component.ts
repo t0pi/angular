@@ -26,6 +26,8 @@ export class FeedComponent implements OnInit {
   commentForm: FormGroup;
   postForm: FormGroup;
   values: any;
+  isLiked: boolean;
+
   //isValid = false;
   constructor(
     private postService: PostRepository,
@@ -135,9 +137,10 @@ export class FeedComponent implements OnInit {
     this.postService.add(inf).subscribe(() => {
         this.postForm.reset();
         this.openSnackBar('Le post a été ajouté');
-        window.location.reload();
       });
-
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/feed']);
+      });
   }
 
   likeUnlike(item)
@@ -148,22 +151,28 @@ export class FeedComponent implements OnInit {
     };
     let boule = true;
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
-      if(!data[0])
+      console.log(data);
+      if(data[0].post)
       {
-        boule = false;
+        this.isLiked = true;
         this.openSnackBar('Vous avez déjà like !');
+      } else {
+        this.isLiked = false;
       }
     });
-    if(!boule)
+    if(!this.isLiked)
     {
       this.likesService.add(inf).subscribe(datas => {
         console.log(datas);
-        this.openSnackBar('Like pris en compte');
+        // this.openSnackBar('Like pris en compte');
       });
     }
-    // window.location.reload();
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/feed']);
+    });
   }
-  onSubmitComment() {
+  onSubmitComment(id) {
+    console.log(id);
     const today1 = new Date();
     let c = today1.toString();
     const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
@@ -173,23 +182,19 @@ export class FeedComponent implements OnInit {
     const inf: Comment = {
       author : this.commentForm.value.author,
       content: this.commentForm.value.content,
-      postid: '1',
+      postid: String(id),
       date : c
     };
     this.commentService.add(inf).subscribe(() => {
         this.commentForm.reset();
-        this.openSnackBar('Le commentaire a été posté !');
-        this.timeout();
-        window.location.reload();
+
+      });
+    this.openSnackBar('Le commentaire a été posté !');
+    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/feed']);
       });
     }
 
-    timeout(){
-      setTimeout(function () {
-        console.log('Test');
-        this.timeout();
-    }, 1000);
-    }
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Ok', {
       duration: 5000,
