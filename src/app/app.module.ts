@@ -32,7 +32,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './components/login/login.component';
 import { LikesRepository } from './services/likes.repository';
-
+import { DragDropModule} from '@angular/cdk/drag-drop';
+import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,8 @@ import { LikesRepository } from './services/likes.repository';
     MatDividerModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatGridListModule
+    MatGridListModule,
+    DragDropModule
   ],
   providers: [
     {provide: PostRepository, useFactory: (http: HttpClient) => new PostService(http), deps: [HttpClient]},

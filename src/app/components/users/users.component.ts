@@ -33,14 +33,10 @@ export class UsersComponent implements OnInit {
     });
       this.users = this.userService.all();
       const v = this.users;
-      v.subscribe({
-        next(value) {
-          // tslint:disable-next-line: prefer-for-of
-          for (let i = 0; i < value.length; i++) {
-            console.log(value[i].pwd);
-          }
+      v.subscribe(data => {
+          console.log(data);
         }
-      });
+      );
   }
   get f() { return this.registerForm.controls; }
 
@@ -66,6 +62,7 @@ export class UsersComponent implements OnInit {
 
           this.userService.add(inf).subscribe((data) => {
             localStorage.setItem('id', data.id);
+            console.log(localStorage);
             this.openSnackBar('Compte créé, redirection en cours...');
             this.registerForm.reset();
             this.router.navigate(['/feed']);

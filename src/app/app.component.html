@@ -1,11 +1,21 @@
 <mat-toolbar color="primary">
   <span>CGI Network</span>
   <span class="spacer"></span>
-  <button mat-mini-fab routerLink="/logout">
-    <mat-icon aria-hidden="false" aria-label="Logout">power_settings_new</mat-icon>
+  <button mat-mini-fab onclick="localStorage.removeItem('id');window.location='http://localhost:4200';alert('You just got disconnected')">
+    <mat-icon >dsqdqsdqs</mat-icon>
   </button>
+  <!-- Dropdown Structure -->
+  <span onclick="changeColor()">
+    Click here
+  </span>
 </mat-toolbar>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
 
+<script>
+function changeColor(){
+  console.log('tamere');
+  document.getElementsByTagName('body')[0].style.backgroundColor = "#decba4";
+}
+</script>

@@ -10,7 +10,8 @@ import {MatSnackBar} from '@angular/material';
 import { Likes} from '../../models/likes';
 import {LikesRepository} from '../../services/likes.repository';
 import { Router } from '@angular/router';
-
+import { User} from '../../models/user';
+import { UsersRepository } from '../../services/users.repository';
 
 @Component({
   selector: 'ngu-feed',
@@ -20,7 +21,8 @@ import { Router } from '@angular/router';
 export class FeedComponent implements OnInit {
   feed: Observable<Post[]>;
   post: Observable<Comment[]>;
-  pschit: Observable<Comment[]> ;
+  users: User[];
+  pschit: Observable<Comment[]>;
   likes: Likes[];
   commentForm: FormGroup;
   postForm: FormGroup;
@@ -30,6 +32,7 @@ export class FeedComponent implements OnInit {
     private postService: PostRepository,
     private commentService: CommentRepository,
     private likesService: LikesRepository,
+    private usersService: UsersRepository,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router
@@ -48,60 +51,68 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.feed = this.postService.all();
-    let l = this.likesService.all();
-    l.subscribe(data => {
-      console.log(data);
-      if(data.length > 0)
+      if(localStorage.getItem('id'))
       {
-        let arr = [];
-        let compteur = 1;
-        let index = data[0].post;
-        let item = {post:index, author: 0};
-        for(let i = 1; i < data.length; i++)
+      this.feed = this.postService.all();
+      const l = this.likesService.all();
+      this.usersService.all().subscribe(data => {
+        this.users = data;
+        console.log(this.users);
+      });
+      l.subscribe(data => {
+        if (data.length > 0)
         {
-          if(data[i].post === index) {
-            compteur++;
-            if(i === data.length -1)
-            {
+          let arr = [];
+          let compteur = 1;
+          let index = data[0].post;
+          let item = {post: index, author: 0};
+          for (let i = 1; i < data.length; i++)
+          {
+            if (data[i].post === index) {
+              compteur++;
+              if (i === data.length - 1)
+              {
+                item.author = compteur;
+                arr.push(item);
+              }
+            } else {
               item.author = compteur;
               arr.push(item);
+              index = data[i].post;
+              item = {post: data[i].post, author: 1};
+              compteur = 1;
             }
-          } else {
-            item.author = compteur;
-            arr.push(item);
-            index = data[i].post;
-            item = {post: data[i].post, author: 1};
-            compteur = 1;
           }
+          this.likes = arr;
         }
-        this.likes = arr;
-        console.log(this.likes);
-      }
-    })
+      });
 
-    //this.likesService.all().toPromise().then(date => {
-    //  console.log(date);
-    //})
+      //this.likesService.all().toPromise().then(date => {
+      //  console.log(date);
+      //})
 
-    const arr = [];
-    const v = this.feed.toPromise().then(data => {
-      arr.push(data);
+      const arr = [];
+      const v = this.feed.toPromise().then(data => {
+        arr.push(data);
 
-    }).then(dt => {
-      const usersstatus = [];
+      }).then(dt => {
+        const usersstatus = [];
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < arr[0].length; i++) {
+          this.pschit = this.postService.getPostComments(String(arr[0][i].id));
+          this.pschit.forEach(val => {
+            // tslint:disable-next-line: forin
+            usersstatus.push(val);
+            this.values = usersstatus;
+          });
+
+        }
+      });
       // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < arr[0].length; i++) {
-        this.pschit = this.postService.getPostComments(String(arr[0][i].id));
-        this.pschit.forEach(val => {
-          // tslint:disable-next-line: forin
-          usersstatus.push(val);
-          this.values = usersstatus;
-        });
+    } else {
+      this.router.navigate(['']);
 
-      }
-    });
-    // tslint:disable-next-line: prefer-for-of
+    }
   }
   // tslint:disable-next-line: use-lifecycle-interface
 
@@ -110,10 +121,11 @@ export class FeedComponent implements OnInit {
    * ******** NOUVEAU POST
    */
   onSubmitPost(data: Post) {
-    let today1 = new Date();
+    const today1 = new Date();
     let c = today1.toString();
-    let arr = {"Dec" : "12"};
-    c = c.split(' ')[3]+ "-" + arr[c.split(' ')[1]]  + "-" + c.split(' ')[2] + ' ' + c.split(' ')[4];
+    const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+    Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11'};
+    c = c.split(' ')[3] + '-' + arr[c.split(' ')[1]]  + '-' + c.split(' ')[2] + ' ' + c.split(' ')[4];
 
     const inf: Post = {
       author : this.postForm.value.author,
