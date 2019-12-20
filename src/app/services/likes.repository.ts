@@ -8,4 +8,7 @@ export abstract class LikesRepository {
 
   abstract byId(id: string, author: string): Observable<Likes>;
 
+  abstract delete(like: Likes): Observable<Likes>;
+
+
 }

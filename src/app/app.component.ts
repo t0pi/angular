@@ -10,12 +10,19 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  yolo: any;
   constructor(
     private router: Router
   ) { }
 
-
-
+  ngOnInit() {
+    // Need to change session patterns
+    if(localStorage.getItem('id')) {
+      this.yolo = true;
+    } else {
+      this.yolo = false;
+    }
+  }
   goToContacts() {
     this.router.navigate(['/contacts']);
   }

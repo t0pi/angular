@@ -18,7 +18,7 @@ import { UsersRepository } from '../../services/users.repository';
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit {
-  feed: Observable<Post[]>;
+  feed: any;
   post: Observable<Comment[]>;
   users: User[];
   pschit: Observable<Comment[]>;
@@ -26,6 +26,8 @@ export class FeedComponent implements OnInit {
   commentForm: FormGroup;
   postForm: FormGroup;
   values: any;
+  isLiked: boolean;
+
   //isValid = false;
   constructor(
     private postService: PostRepository,
@@ -38,7 +40,7 @@ export class FeedComponent implements OnInit {
   ) {
     this.postForm = this.formBuilder.group({
       title: 'Titre',
-      postdate: '',
+      postDate: '',
       author: localStorage.getItem('id'),
       content: ['', Validators.required]
     });
@@ -49,18 +51,44 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+   ngOnInit() {
       if(localStorage.getItem('id'))
       {
-      this.feed = this.postService.all();
-      this.feed.subscribe(data => {
-        console.log(data);
-      })
+      let finalFeed = [];
+      this.postService.all();
+      this.postService.all().subscribe(data => {
+        if(data.length > 0) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            let items =
+            {
+              date: data[i].postdate,
+              userId: data[i].author,
+              userName: '',
+              content: data[i].content,
+              postId: data[i].id
+            };
+            finalFeed.push(items);
+          }
+        }
+      });
       const l = this.likesService.all();
       this.usersService.all().subscribe(data => {
         this.users = data;
-        console.log(this.users);
+        // tslint:disable-next-line: prefer-for-of
+        for ( let i = 0; i < finalFeed.length; i++) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let j = 0; j < this.users.length; j++) {
+
+            if (finalFeed[i].userId == this.users[j].id) {
+              finalFeed[i].userName = this.users[j].name;
+            }
+          }
+        }
       });
+      console.log('feed');
+      console.log(finalFeed);
+      this.feed = finalFeed;
       l.subscribe(data => {
         if (data.length > 0)
         {
@@ -86,16 +114,10 @@ export class FeedComponent implements OnInit {
             }
           }
           this.likes = arr;
-          console.log(this.likes);
         }
       });
-
-      //this.likesService.all().toPromise().then(date => {
-      //  console.log(date);
-      //})
-
       const arr = [];
-      const v = this.feed.toPromise().then(data => {
+      this.postService.all().toPromise().then(data => {
         arr.push(data);
 
       }).then(dt => {
@@ -105,11 +127,15 @@ export class FeedComponent implements OnInit {
           this.pschit = this.postService.getPostComments(String(arr[0][i].id));
           this.pschit.forEach(val => {
             // tslint:disable-next-line: forin
-            usersstatus.push(val);
-            this.values = usersstatus;
-          });
+            if(val.length > 0) {
+              usersstatus.push(val);
+              console.log(val);
 
+            }
+          });
         }
+        this.values = usersstatus;
+        console.log('values');
         console.log(this.values);
       });
       // tslint:disable-next-line: prefer-for-of
@@ -131,19 +157,17 @@ export class FeedComponent implements OnInit {
     c = c.split(' ')[3] + '-' + arr[c.split(' ')[1]]  + '-' + c.split(' ')[2] + ' ' + c.split(' ')[4];
 
     const inf: Post = {
-      author : this.postForm.value.author,
+      author : localStorage.getItem('id'),
       content: this.postForm.value.content,
       postdate : c,
-      title: this.postForm.value.title
+      title: 'hello'
     };
+
     this.postService.add(inf).subscribe(() => {
         this.postForm.reset();
         this.openSnackBar('Le post a été ajouté');
-        window.location.reload();
+        this.router.navigate(['/feed']);
       });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/feed']);
-    });
   }
 
   likeUnlike(item)
@@ -154,24 +178,22 @@ export class FeedComponent implements OnInit {
     };
     /**let boule = true;
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
-      if(!data[0])
+      console.log(data);
+      if(data[0].post)
       {
-        boule = false;
+        this.isLiked = true;
         this.openSnackBar('Vous avez déjà like !');
+      } else {
+        this.isLiked = false;
       }
     });*/
-      this.likesService.add(inf).subscribe(datas => {
-        console.log(datas);
-        this.openSnackBar('Like pris en compte');
-      });
-      this.router.navigate(['/feed']).then(data => {
-        console.log(data);
-      });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+    this.likesService.add(inf).subscribe(datas => {
+      // this.openSnackBar('Like pris en compte');
       this.router.navigate(['/feed']);
     });
   }
-  onSubmitComment() {
+  onSubmitComment(id) {
+    console.log(id);
     const today1 = new Date();
     let c = today1.toString();
     const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
@@ -181,26 +203,18 @@ export class FeedComponent implements OnInit {
     const inf: Comment = {
       author : this.commentForm.value.author,
       content: this.commentForm.value.content,
-      postid: '1',
+      postid: String(id),
       date : c
     };
     this.commentService.add(inf).subscribe(() => {
         this.commentForm.reset();
-        this.openSnackBar('Le commentaire a été posté !');
-        this.timeout();
-        window.location.reload();
+
       });
-    this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/feed']);
-    });
+    this.openSnackBar('Le commentaire a été posté !');
+    this.router.navigate(['/feed']);
+
     }
 
-    timeout(){
-      setTimeout(function () {
-        console.log('Test');
-        this.timeout();
-    }, 1000);
-    }
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Ok', {
       duration: 5000,
