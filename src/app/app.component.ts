@@ -10,17 +10,18 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  yolo: any;
+  loggedIn: any;
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
     // Need to change session patterns
-    if(localStorage.getItem('id')) {
-      this.yolo = true;
+    if (localStorage.getItem('id')) {
+      this.router.navigate(['/feed']);
+      this.loggedIn = true;
     } else {
-      this.yolo = false;
+      this.loggedIn = false;
     }
   }
   goToContacts() {

@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
   showPw() {
-    if(document.getElementById('pw').type === "text") {
+    if (document.getElementById('pw').type === 'text') {
       document.getElementById('pw').type = 'password';
       document.getElementById('cPw').type = 'password';
 

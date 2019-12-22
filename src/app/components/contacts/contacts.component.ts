@@ -8,16 +8,15 @@ import { UsersRepository } from '../../services/users.repository';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-
+  loggedIn = true;
   users: User[];
   constructor(
     private usersService: UsersRepository
   ) { }
 
-  ngOnInit() {
-    this.usersService.all().subscribe(data => {
+  async ngOnInit() {
+    await this.usersService.all().subscribe(data => {
       this.users = data;
-      console.log(this.users);
     });
   }
 }

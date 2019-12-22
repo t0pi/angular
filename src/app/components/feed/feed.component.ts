@@ -27,6 +27,7 @@ export class FeedComponent implements OnInit {
   postForm: FormGroup;
   values: any;
   isLiked: boolean;
+  loggedIn = true;
 
   //isValid = false;
   constructor(
@@ -86,8 +87,7 @@ export class FeedComponent implements OnInit {
           }
         }
       });
-      console.log('feed');
-      console.log(finalFeed);
+
       this.feed = finalFeed;
       l.subscribe(data => {
         if (data.length > 0)
