@@ -19,12 +19,15 @@ export class LikesService implements LikesRepository {
     return this.http.get<Likes[]>(this.url);
   }
 
-  byId(post: string,author: string): Observable<Likes> {
+  byId(post: string, author: string): Observable<Likes> {
     return this.http.get<Likes>(`${this.url}/${post}/${author}`);
   }
 
-  delete(like: Likes): Observable<Likes> {
-    console.log(`${this.url}/${like}`);
-    return this.http.post<Likes>(this.url, like);
-  }
+  /**delete(post: string, author: string): void {
+    const like = {
+      post,
+      author,
+    }
+    return this.http.post(this.url, like);
+  }*/
 }

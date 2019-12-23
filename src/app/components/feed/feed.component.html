@@ -29,7 +29,7 @@
         <div *ngFor="let like of likes">
           <span *ngIf="like.post==post.id">{{like.author}}</span>
         </div>
-        <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.id)">
+        <button matTooltip="J'aime" mat-mini-fab class="like" (click)="likeUnlike(post.postId)">
           <i class="material-icons">thumb_up</i>
         </button>
       </div>

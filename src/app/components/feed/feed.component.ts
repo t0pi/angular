@@ -89,6 +89,7 @@ export class FeedComponent implements OnInit {
       });
 
       this.feed = finalFeed;
+      console.log(this.feed);
       l.subscribe(data => {
         if (data.length > 0)
         {
@@ -129,14 +130,10 @@ export class FeedComponent implements OnInit {
             // tslint:disable-next-line: forin
             if(val.length > 0) {
               usersstatus.push(val);
-              console.log(val);
-
             }
           });
         }
         this.values = usersstatus;
-        console.log('values');
-        console.log(this.values);
       });
       // tslint:disable-next-line: prefer-for-of
     } else {
@@ -172,28 +169,29 @@ export class FeedComponent implements OnInit {
 
   likeUnlike(item)
   {
+    console.log(item);
     const inf: Likes = {
       author: localStorage.getItem('id'),
       post : String(item)
     };
-    /**let boule = true;
+
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
       console.log(data);
-      if(data[0].post)
+      if(data[0])
       {
-        this.isLiked = true;
         this.openSnackBar('Vous avez déjà like !');
       } else {
-        this.isLiked = false;
+        this.openSnackBar('Le like a bien été pris en compte !');
+
+        this.likesService.add(inf).subscribe(datas => {
+          this.openSnackBar('Like pris en compte');
+          this.router.navigate(['/feed']);
+        });
       }
-    });*/
-    this.likesService.add(inf).subscribe(datas => {
-      // this.openSnackBar('Like pris en compte');
-      this.router.navigate(['/feed']);
     });
   }
-  onSubmitComment(id) {
-    console.log(id);
+  onSubmitComment(id)
+  {
     const today1 = new Date();
     let c = today1.toString();
     const arr = {Dec : '12', Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
