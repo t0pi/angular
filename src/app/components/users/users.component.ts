@@ -5,7 +5,7 @@ import {User} from '../../models/user';
 import {UsersRepository} from '../../services/users.repository';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
+import { DOCUMENT } from '@angular/common';
 // import custom validator to validate that password and confirm password fields match
 
 @Component({
@@ -17,6 +17,9 @@ export class UsersComponent implements OnInit {
   users: Observable<User[]>;
   registerForm: FormGroup;
   submitted = false;
+  pw: HTMLElement;
+  cPw: HTMLElement;
+
   constructor(
     private userService: UsersRepository,
     private formBuilder: FormBuilder,
@@ -24,14 +27,16 @@ export class UsersComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
   showPw() {
-    if (document.getElementById('pw').type === 'text') {
-      document.getElementById('pw').type = 'password';
-      document.getElementById('cPw').type = 'password';
 
+    this.pw = document.getElementById('pw') as HTMLElement;
+    this.cPw = document.getElementById('cPw') as HTMLElement;
+
+    if (this.pw.type === 'text') {
+      this.pw.type = 'password';
+      this.cPw.type = 'password';
     } else {
-      document.getElementById('pw').type = 'text';
-      document.getElementById('cPw').type = 'text';
-
+        this.pw.type = 'text';
+        this.cPw.type = 'text';
     }
   }
   ngOnInit() {
