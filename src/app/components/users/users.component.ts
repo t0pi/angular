@@ -31,11 +31,16 @@ export class UsersComponent implements OnInit {
     this.pw = document.getElementById('pw') as HTMLElement;
     this.cPw = document.getElementById('cPw') as HTMLElement;
 
+    // @ts-ignore
     if (this.pw.type === 'text') {
+      // @ts-ignore
       this.pw.type = 'password';
+      // @ts-ignore
       this.cPw.type = 'password';
     } else {
+      // @ts-ignore
         this.pw.type = 'text';
+      // @ts-ignore
         this.cPw.type = 'text';
     }
   }
