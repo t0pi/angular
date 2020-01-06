@@ -12,7 +12,8 @@ export class LikesService implements LikesRepository {
   constructor(private http: HttpClient) { }
 
   add(book: Likes): Observable<Likes> {
-    return this.http.post<Likes>(this.url, book);
+    const url = this.url + '/add';
+    return this.http.post<Likes>(url, book);
   }
 
   all(): Observable<Likes[]> {
@@ -23,11 +24,9 @@ export class LikesService implements LikesRepository {
     return this.http.get<Likes>(`${this.url}/${post}/${author}`);
   }
 
-  /**delete(post: string, author: string): void {
-    const like = {
-      post,
-      author,
-    }
-    return this.http.post(this.url, like);
-  }*/
+  // tslint:disable-next-line: no-unused-expression
+  delete(like: Likes): Observable<void> {
+    console.log(this.http.post<void>(this.url + '/delete', like));
+    return this.http.post<void>(this.url + '/delete', like);
+  }
 }

@@ -75,18 +75,17 @@
   <mat-card-header>
     <mat-card-title>Messagerie instantanée</mat-card-title>
   </mat-card-header>
-  <mat-form-field style="width: 100%">
+  <form  [formGroup]="mesgForm" (ngSubmit)="onSubmitMessage()">
     <mat-label>Vos contacts</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let user of users">
+    <mat-select formControlName="contacts" id="dest">
+      <mat-option *ngFor="let user of users" [value]="user.id">
         {{user.name}}
       </mat-option>
     </mat-select>
-  </mat-form-field>
-  <textarea disabled
-            style="margin-top: auto; height: 200px; min-height: 45px!important;"
+  </form>
+  <textarea style="margin-top: auto; height: 200px; min-height: 45px!important;"
             matInput
             cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" placeholder="Votre message..."></textarea>
-  <button disabled mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
+            #autosize="cdkTextareaAutosize" [value]="" placeholder="Votre message..."></textarea>
+  <button mat-raised-button color="primary" type="submit"><mat-icon aria-hidden="false" aria-label="Example home icon">send</mat-icon></button>
 </mat-card>

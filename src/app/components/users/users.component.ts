@@ -5,7 +5,6 @@ import {User} from '../../models/user';
 import {UsersRepository} from '../../services/users.repository';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { DOCUMENT } from '@angular/common';
 // import custom validator to validate that password and confirm password fields match
 
 @Component({

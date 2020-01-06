@@ -28,6 +28,8 @@ export class FeedComponent implements OnInit {
   values: any;
   isLiked: boolean;
   loggedIn = true;
+  mesgForm: FormGroup;
+  contacts = [];
 
   //isValid = false;
   constructor(
@@ -39,6 +41,10 @@ export class FeedComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
   ) {
+    this.mesgForm = this.formBuilder.group({
+      contacts: [''],
+    });
+    this.contacts = this.users;
     this.postForm = this.formBuilder.group({
       title: 'Titre',
       postDate: '',
@@ -89,7 +95,7 @@ export class FeedComponent implements OnInit {
       });
 
       this.feed = finalFeed;
-      console.log(this.feed);
+
       l.subscribe(data => {
         if (data.length > 0)
         {
@@ -128,7 +134,7 @@ export class FeedComponent implements OnInit {
           this.pschit = this.postService.getPostComments(String(arr[0][i].id));
           this.pschit.forEach(val => {
             // tslint:disable-next-line: forin
-            if(val.length > 0) {
+            if (val.length > 0) {
               usersstatus.push(val);
             }
           });
@@ -167,9 +173,7 @@ export class FeedComponent implements OnInit {
       });
   }
 
-  likeUnlike(item)
-  {
-    console.log(item);
+  likeUnlike(item) {
     const inf: Likes = {
       author: localStorage.getItem('id'),
       post : String(item)
@@ -177,9 +181,15 @@ export class FeedComponent implements OnInit {
 
     this.likesService.byId(inf.post, inf.author).subscribe(data => {
       console.log(data);
-      if(data[0])
-      {
-        this.openSnackBar('Vous avez déjà like !');
+      if (data[0]) {
+        console.log("yo");
+        const like: Likes = {
+          post: inf.post,
+          author: inf.author
+        };
+        this.likesService.delete(like).subscribe();
+        this.openSnackBar('Like supprimé !');
+        return;
       } else {
         this.openSnackBar('Le like a bien été pris en compte !');
 
@@ -217,6 +227,10 @@ export class FeedComponent implements OnInit {
     this.snackBar.open(message, 'Ok', {
       duration: 5000,
     });
+  }
+
+  onSubmitMessage() {
+    console.log('hey');
   }
 
 }

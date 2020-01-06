@@ -15,6 +15,7 @@ export class AppComponent {
     private router: Router
   ) { }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
     // Need to change session patterns
     if (localStorage.getItem('id')) {
